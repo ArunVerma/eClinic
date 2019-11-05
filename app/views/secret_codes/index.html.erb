@@ -1,0 +1,32 @@
+<h1>Secret Codes</h1>
+<p>
+  <%= form_with url: secret_codes_path, html: {class: 'form-inline'}, method: 'POST' do |form| %>
+    <div class="input-group mb-2 mr-sm-2">
+      <%= form.select :number_of_codes, options_for_select(SecretCode.options_for_new_codes, 10), class: 'form-control' %>
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Add more codes</button>&nbsp; 
+    <%= link_to 'Logout', destroy_user_session_path, :method => :delete, class: 'btn btn-outline-danger mb-2' %>
+  <% end %>
+</p>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Code</th>
+      <th scope="col">User</th>
+      <th scope="col">Available</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @secret_codes.each_with_index do |sc, idx| %>
+      <% present(sc) do |code| %>
+        <tr>
+          <th scope="row"><%= idx+1 %></th>
+          <td><%= code.code %></td>
+          <td><%= code.user_email %></td>
+          <td><%= code.status %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
