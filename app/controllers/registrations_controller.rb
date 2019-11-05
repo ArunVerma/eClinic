@@ -2,17 +2,12 @@
 # overriding RegistrationsController
 class RegistrationsController < Devise::RegistrationsController
 
-  def new
-    super
-  end
-
   def create
     if sercret_code_matched?
       super
-      puts "current_user"
-      puts current_user.inspect
       @code.update(user: current_user) if current_user.present?
     else
+      @user = User.new
       render 'new'
     end
   end

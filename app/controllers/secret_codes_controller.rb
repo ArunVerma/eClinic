@@ -1,7 +1,8 @@
 class SecretCodesController < ApplicationController
+  load_and_authorize_resource
 
   def index
-    @secret_codes = SecretCode.includes(:user).all
+    @secret_codes = SecretCode.includes(:user).all.order('updated_at desc')
   end
 
   def create
